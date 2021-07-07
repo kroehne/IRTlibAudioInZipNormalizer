@@ -1,9 +1,9 @@
-# IRTlibReadiness
+# IRTlibAudioInZipNormalizer
 
-[![Build IRTlibReadiness Tool](https://github.com/kroehne/IRTlibReadiness/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kroehne/IRTlibReadiness/actions/workflows/dotnet.yml)
+[![Build IRTlibAudioInZipNormalizer Tool](https://github.com/kroehne/IRTlibAudioInZipNormalizer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kroehne/IRTlibAudioInZipNormalizer/actions/workflows/dotnet.yml)
 
 Supported OS: Windows (only)
 
-Release: The latest release can be found [here](https://github.com/kroehne/IRTlibReadiness/releases/download/latest/ReadinessTool.exe). 
+Release: The latest release can be found [here](https://github.com/kroehne/IRTlibAudioInZipNormalizer/releases/download/latest/AudioInZipNormalizer.exe). 
 
-Howto: Download the executable (ReadinessTool.exe), copy it to a thumb drive and run it on the target harddware. 
+Howto: To normalize mp3's download the executable (AudioInZipNormalizer.exe) and run it within a folder of ZIP archives (e.g., CBA ItemBuilder project files) or run AudioInZipNormalizer.exe Folder. 
