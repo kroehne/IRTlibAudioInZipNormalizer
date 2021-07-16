@@ -21,7 +21,7 @@ namespace AudioInZipNormalizer
             {
                 targetDirectory = args[0];
             } 
-            else if (args.Length == 1)
+            if (args.Length > 1)
             {
                 audioMax = float.Parse(args[1], CultureInfo.InvariantCulture);
             }
