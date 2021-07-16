@@ -6,24 +6,32 @@ using System.IO.Compression;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace AudioInZipNormalizer
 {
     class Program
     {
+        static float audioMax = 1.0f;
+
         static void Main(string[] args)
         {
             string targetDirectory = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
             if (args.Length != 0)
             {
                 targetDirectory = args[0];
+            } 
+            else if (args.Length == 1)
+            {
+                audioMax = float.Parse(args[1], CultureInfo.InvariantCulture);
             }
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("IRTlib: AudioInZipNormalizer ({0})\n", typeof(Program).Assembly.GetName().Version.ToString());
             Console.ResetColor();
             Console.WriteLine("- Working Directory: {0}", targetDirectory);
-             
+            Console.WriteLine("- Audio Max: {0}", audioMax);
+
             string tmpFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "AudioInZipNormalizer");
             if (Directory.Exists(tmpFolder))
             {
@@ -69,7 +77,7 @@ namespace AudioInZipNormalizer
                     {
                         Console.Write(Path.GetFileName(zipfile) + " --> " + entry.Name);
                         entry.ExtractToFile(Path.Combine(tmpFolder, "old", entry.Name));
-                        increaseVolume(Path.Combine(tmpFolder, "old", entry.Name), Path.Combine(tmpFolder, "new", entry.Name));
+                        increaseVolume(Path.Combine(tmpFolder, "old", entry.Name), Path.Combine(tmpFolder, "new", entry.Name), audioMax);
                         _filesToReplace.Add(new Tuple<string, string>(Path.Combine(tmpFolder, "new", entry.Name), entry.FullName));
                         Console.WriteLine(".");
                     }
@@ -89,7 +97,7 @@ namespace AudioInZipNormalizer
             }
 
         }
-        private static void increaseVolume(string inpath, string outpath)
+        private static void increaseVolume(string inpath, string outpath, float audioMax)
         {
             float max = 0;
             using (var reader = new AudioFileReader(inpath))
@@ -113,7 +121,7 @@ namespace AudioInZipNormalizer
 
                 // rewind and amplify
                 reader.Position = 0;
-                reader.Volume = 1.0f / max;
+                reader.Volume = 1.0f / max * audioMax;
 
                 MediaFoundationEncoder.EncodeToMp3(reader, outpath);
             }
