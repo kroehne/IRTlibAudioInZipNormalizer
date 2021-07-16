@@ -1,4 +1,4 @@
-name: Build IRTlibReadiness Tool 
+name: Build IRTlibAudioInZipNormalizer Tool 
 on:
   push:
     branches: [ main ]
